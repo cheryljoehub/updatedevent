@@ -1,0 +1,387 @@
+:root {
+  --canyon-deep:   #241536;
+  --canyon-purple: #4F2D7F;
+  --canyon-plum:   #6C3FA0;
+  --canyon-rose:   #A85C8A;
+  --canyon-coral:  #D97A68;
+  --neon-cyan:     #44F2FF;
+  --neon-pink:     #FF54D9;
+  --neon-lime:     #D7FF52;
+  --gold:          #FFC627;
+  --gold-dim:      #E8AE1B;
+  --paper:         #F7F3FB;
+  --ink:           #241536;
+  --ink-soft:      #6B5B85;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #050817;
+  font-family: 'Manrope', sans-serif;
+  color: var(--paper);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- Canyon strata background ---------- */
+.strata {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 1;
+  background:
+    radial-gradient(ellipse at 78% 4%, rgba(68, 242, 255, 0.3), transparent 26%),
+    radial-gradient(ellipse at 14% 80%, rgba(255, 84, 217, 0.2), transparent 28%),
+    linear-gradient(155deg, #050817 0%, #0B1B38 44%, #102D47 100%);
+}
+
+.strata::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.2;
+  background-image: linear-gradient(rgba(68, 242, 255, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(68, 242, 255, 0.5) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+
+.layer {
+  position: absolute;
+  z-index: 1;
+  left: -5%;
+  width: 110%;
+  height: 32%;
+  opacity: 0.9;
+}
+
+.layer-1 { top: -8%; height: 28%; background: linear-gradient(110deg, #241536, #38205D);
+  clip-path: polygon(0 28%, 22% 5%, 48% 20%, 72% 0, 100% 18%, 100% 100%, 0 100%); }
+.layer-2 { top: 14%; height: 26%; background: linear-gradient(110deg, #4F2D7F, #65409A);
+  clip-path: polygon(0 26%, 18% 8%, 46% 25%, 75% 4%, 100% 20%, 100% 100%, 0 100%); }
+.layer-3 { top: 36%; height: 27%; background: linear-gradient(110deg, #6C3FA0, #8753AC);
+  clip-path: polygon(0 20%, 28% 0, 55% 22%, 80% 5%, 100% 18%, 100% 100%, 0 100%); }
+.layer-4 { top: 59%; height: 28%; background: linear-gradient(110deg, #814B91, #A85C8A);
+  clip-path: polygon(0 25%, 24% 4%, 54% 24%, 79% 0, 100% 16%, 100% 100%, 0 100%); }
+.layer-5 { top: 81%; height: 24%; background: linear-gradient(110deg, #5B2D72, #7B3F83);
+  clip-path: polygon(0 30%, 32% 4%, 63% 28%, 100% 8%, 100% 100%, 0 100%); }
+
+/* ---------- Back button ---------- 
+#backBtn {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 10;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  background: rgba(247, 243, 251, 0.08);
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}*/
+
+#backBtn svg {
+  width: 20px;
+  height: 20px;
+}
+
+#backBtn:hover {
+  background: rgba(255, 198, 39, 0.12);
+  border-color: rgba(255, 198, 39, 0.5);
+}
+
+#backBtn:active { transform: scale(0.94); }
+
+/* ---------- Kiosk shell ---------- */
+.kiosk {
+  position: relative;
+  z-index: 1;
+  height: 100dvh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(22px, 3.2vh, 48px) clamp(20px, 4vw, 64px) clamp(18px, 2.4vh, 34px);
+}
+
+.kiosk-header {
+  text-align: center;
+  animation: dropIn 700ms ease both;
+}
+
+.brand-panel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 2vw, 24px);
+  padding: clamp(14px, 1.8vw, 22px) clamp(18px, 2.6vw, 28px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px 34px 18px 34px;
+  background: linear-gradient(135deg, rgba(18, 46, 72, 0.88), rgba(8, 14, 34, 0.76));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.42), 0 0 28px rgba(68, 242, 255, 0.1), inset 0 1px 0 rgba(68, 242, 255, 0.18);
+  position: relative;
+}
+
+.brand-panel::after {
+  content: '';
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--gold), transparent);
+  opacity: 0.75;
+}
+
+.brand-logo {
+  width: clamp(56px, 8vw, 88px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.25));
+}
+
+.mark {
+  text-align: center;
+  margin-left: -3px;
+}
+
+.mark-line {
+  display: block;
+  font-size: clamp(11px, 1.3vw, 15px);
+  letter-spacing: 0.32em;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.kiosk-header h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: clamp(30px, 4.6vw, 58px);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.tagline {
+  margin: 16px 0 0;
+  color: #F4E7D3;
+  font-size: clamp(13px, 1.4vw, 18px);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 720px), (orientation: portrait) {
+  .brand-panel {
+    flex-direction: column;
+    border-radius: 24px;
+    padding: 16px 18px;
+  }
+
+  .mark {
+    text-align: center;
+  }
+}
+
+/* ---------- Tiles ---------- */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  gap: clamp(14px, 1.8vw, 24px);
+  width: min(1100px, 92vw);
+  flex: 1;
+  align-content: center;
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 1.8vw, 26px);
+  padding: clamp(20px, 2.3vw, 30px) clamp(20px, 2.6vw, 30px);
+  min-height: clamp(116px, 12vh, 150px);
+  background: linear-gradient(135deg, rgba(11, 27, 51, 0.94), rgba(8, 15, 34, 0.9));
+  border: 1px solid rgba(68, 242, 255, 0.42);
+  border-radius: 14px 28px 14px 28px;
+  color: var(--paper);
+  cursor: pointer;
+  text-align: left;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.3), 0 0 18px rgba(68, 242, 255, 0.08), inset 0 1px 0 rgba(68, 242, 255, 0.16);
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  animation: tileIn 620ms ease both;
+  animation-delay: calc(var(--i) * 90ms + 120ms);
+}
+
+.tile::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: 0;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 12px var(--neon-cyan);
+}
+
+.tile:nth-child(2)::before,
+.tile:nth-child(5)::before { background: var(--neon-pink); box-shadow: 0 0 12px var(--neon-pink); }
+
+.tile:nth-child(3)::before,
+.tile:nth-child(6)::before { background: var(--neon-lime); box-shadow: 0 0 12px var(--neon-lime); }
+
+.tile:hover {
+  transform: translateY(-5px);
+  background: linear-gradient(135deg, rgba(18, 54, 79, 0.98), rgba(12, 22, 48, 0.98));
+  border-color: var(--neon-cyan);
+  box-shadow: 0 20px 36px rgba(0, 0, 0, 0.36), 0 0 24px rgba(68, 242, 255, 0.28), 0 0 0 1px rgba(68, 242, 255, 0.24);
+}
+
+.tile:active {
+  transform: translateY(-1px) scale(0.985);
+  background: rgba(68, 242, 255, 0.18);
+}
+
+.tile:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.tile-icon {
+  flex: 0 0 auto;
+  width: clamp(46px, 5.2vw, 64px);
+  height: clamp(46px, 5.2vw, 64px);
+  color: var(--neon-cyan);
+  padding: 9px;
+  border: 1px solid rgba(68, 242, 255, 0.52);
+  border-radius: 18px;
+  background: rgba(68, 242, 255, 0.08);
+  box-shadow: 0 0 14px rgba(68, 242, 255, 0.12);
+  transition: transform 180ms ease, background 180ms ease;
+}
+.tile-icon svg { width: 100%; height: 100%; }
+
+.tile:hover .tile-icon {
+  transform: rotate(-4deg) scale(1.06);
+  background: rgba(68, 242, 255, 0.18);
+  box-shadow: 0 0 20px rgba(68, 242, 255, 0.28);
+}
+
+.tile-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.tile-label {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: clamp(19px, 2.1vw, 27px);
+  line-height: 1.15;
+}
+
+.tile-sub {
+  font-size: clamp(12px, 1.25vw, 15px);
+  color: #B8D5DE;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.tile-go {
+  flex: 0 0 auto;
+  font-size: clamp(20px, 2.2vw, 28px);
+  color: var(--neon-lime);
+  text-shadow: 0 0 10px rgba(215, 255, 82, 0.7);
+  opacity: 1;
+  transition: transform 160ms ease;
+}
+
+.tile:hover .tile-go { transform: translateX(4px); }
+
+/* ---------- Footer ---------- */
+.kiosk-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: clamp(16px, 1.1vw, 70px);
+  color: #D0C2DE;
+  letter-spacing: 0.02em;
+  padding: 10px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(22, 12, 35, 0.26);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.dot { color: var(--gold); }
+
+/* ---------- Motion ---------- */
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes tileIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kiosk-header, .tile { animation: none; }
+  .tile, .tile-icon { transition: none; }
+}
+
+/* ---------- Solid deep purple background ---------- */
+html, body { background: #241536; }
+.strata { background: #241536; }
+.strata::before {
+  display: block;
+  opacity: .5;
+  background-image:
+    radial-gradient(circle, #FFC627 0 3px, transparent 3.5px),
+    linear-gradient(35deg, transparent 42%, #44F2FF 43% 58%, transparent 59%),
+    linear-gradient(120deg, transparent 42%, #FF54D9 43% 58%, transparent 59%),
+    radial-gradient(circle, #D7FF52 0 2px, transparent 2.5px),
+    linear-gradient(75deg, transparent 42%, #FFC627 43% 58%, transparent 59%);
+  background-size: 170px 190px, 150px 175px, 210px 220px, 230px 205px, 190px 240px;
+  background-position: 18px 24px, 72px 80px, 125px 12px, 40px 142px, 155px 116px;
+}
+.layer { display: none; }
+
+.strata::before {
+  background-image:
+    radial-gradient(circle at 8% 14%, rgba(255,198,39,.7) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 24% 72%, rgba(68,242,255,.65) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 47% 22%, rgba(255,84,217,.65) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 72% 64%, rgba(215,255,82,.7) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 91% 32%, rgba(68,242,255,.6) 0 2px, transparent 2.5px);
+  background-size: 260px 230px, 310px 280px, 340px 260px, 290px 320px, 380px 300px;
+  background-position: 0 0, 80px 40px, 120px 100px, 30px 170px, 190px 10px;
+  opacity: .5;
+}
+
+/* ---------- Small / portrait kiosks ---------- */
+@media (max-width: 720px), (orientation: portrait) {
+  html, body { overflow-y: auto; }
+  .kiosk { height: auto; min-height: 100dvh; padding-top: 32px; padding-bottom: 32px; }
+  .tiles { grid-template-columns: 1fr; width: 100%; }
+}
