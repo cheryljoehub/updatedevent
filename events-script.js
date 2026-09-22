@@ -72,6 +72,15 @@ const EVENTS = [
    // desc: "Meet recruiters and learn about internship and full-time openings across departments.",
    // link: "#"
   },
+    {
+    day: "Wednesday",
+    date: "September 23",
+    time: "4:00 PM",
+    title: "Finance Bible Study",
+    location: "Rivers GCBC",
+   // desc: "Meet recruiters and learn about internship and full-time openings across departments.",
+   // link: "#"
+  },
       {
     day: "Wednesday",
     date: "September 23",
@@ -81,6 +90,7 @@ const EVENTS = [
    // desc: "Meet recruiters and learn about internship and full-time openings across departments.",
    // link: "#"
   },
+    
   {
     day: "Thursday",
     date: "September 24",
@@ -93,8 +103,8 @@ const EVENTS = [
     {
     day: "Thursday",
     date: "September 24",
-    time: "3:45 PM",
-    title: "Financial Planning Association Club Meeting",
+    time: "5:00 PM",
+    title: "GCU Money Mentors - Meet the Mentors",
     location: "CCOB Lobby",
     //desc: "Practice a real interview with feedback from career coaches. Sign-up required.",
    // link: "#"
