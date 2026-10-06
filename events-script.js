@@ -1,60 +1,186 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Events This Week | College of Business</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;900&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="events-style.css">
-</head>
-<body>
+/* ============================================================
+   WEEKLY UPDATE ZONE
+   Edit WEEK_OF and the EVENTS array every Monday.
+   Each event needs: day, date, time, title, location, desc, link
+   "day" must be one of: Monday, Tuesday, Wednesday, Thursday,
+   Friday, Saturday, Sunday — used to group and to highlight today.
+   "link" and "desc" are optional — leave as "" if not needed.
+   Delete last week's events and paste in the new ones.
+   ============================================================ */
 
-<div class="strata" aria-hidden="true"></div>
+const WEEK_OF = "October`, 2026";
 
-<button id="backBtn" onclick="goBack()" aria-label="Back to previous page">
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M15 5 L8 12 L15 19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-</button>
-  
-<script>
-  let idleTimer;
+const EVENTS = [
+  {
+    day: "Monday",
+    date: "October 5",
+    time: "4:00 PM",
+    title: "Nascar panel",
+    location: "CCOB Lobby",
+ //   desc: "Drop by with a printed or digital resume for a 10-minute review from career services staff.",
+   // link: ""
+  },
+    {
+    day: "Tuesday",
+    date: "October 6",
+    time: "5:30 PM",
+    title: "Real Estate Event",
+    location: "CCOB Lobby",
+ //   desc: "Drop by with a printed or digital resume for a 10-minute review from career services staff.",
+   // link: ""
+  },
+  {
+    day: "Wednesday",
+    date: "October 7",
+    time: "3:00 PM",
+    title: "IDEA Club Event",
+    location: "CCOB Lobby",
+   // desc: "Guest speaker from a local investment firm, plus club elections for next semester.",
+    //link: "#"
+  },{
+    day: "Wednesday",
+    date: "October 7",
+    time: "1:30 PM",
+    title: "Idea Club Bible Study",
+    location: "42-102",
+   // desc: "Guest speaker from a local investment firm, plus club elections for next semester.",
+    //link: "#"
+  },
+  {
+    day: "Wednesday",
+    date: "October 7",
+    time: "6:00 PM",
+    title: "GCU Construction Management Club Event",
+    location: "CCOB Lobby",
+   // desc: "Meet recruiters and learn about internship and full-time openings across departments.",
+   // link: "#"
+  },
+    {
+    day: "Thursday",
+    date: "October 8",
+    time: "11 AM",
+    title: "T.W Lewis Speakership - Paul Charlton",
+    location: "CCOB Lobby",
+   // desc: "Meet recruiters and learn about internship and full-time openings across departments.",
+   // link: "#"
+  },
 
-  function resetIdleTimer() {
-    clearTimeout(idleTimer);
+  {
+    day: "Thursday",
+    date: "September 24",
+    time: "9:00 AM – 4:00 PM",
+    title: "IDEA Club Marketplace",
+    location: "CCOB Courtyard",
+    //desc: "Practice a real interview with feedback from career coaches. Sign-up required.",
+   // link: "#"
+  },
+    /*{
+    day: "Thursday",
+    date: "September 24",
+    time: "3:45 PM",
+    title: "Financial Planning Association Club Meeting",
+    location: "CCOB Lobby",
+    //desc: "Practice a real interview with feedback from career coaches. Sign-up required.",
+   // link: "#"
+  },
+  {
+    day: "Friday",
+    date: "September 25",
+    time: "4:00 PM",
+    title: "ASGCU Senate Townhall",
+    location: "CCOB Lobby",
+  //  desc: "Open session for resume tips and one-on-one feedback from campus career advisors.",
+   // link: "#"
+  },
+    {
+    day: "Saturday",
+    date: "September 26",
+    time: "9:00 AM",
+    title: "Project Management Workshop",
+    location: "42-181",
+    //desc: "Practice a real interview with feedback from career coaches. Sign-up required.",
+   // link: "#"
+  },
+  {
+    day: "Saturday",
+    date: "July 17",
+    time: "10:00 AM – 12:00 PM",
+    title: "Resume Workshop",
+    location: "Student Center, Room 101",
+    desc: "Open session for resume tips and one-on-one feedback from campus career advisors.",
+    link: "#"
+  }*/
+];
 
-    idleTimer = setTimeout(() => {
-      history.back();
-    }, 60000); // 1 minute
-  }
+/* ============================================================
+   RENDER LOGIC — no need to touch anything below this line
+   ============================================================ */
 
-  // Reset the timer whenever the user does something
-  ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll'].forEach(event => {
-    document.addEventListener(event, resetIdleTimer);
+const DAY_ORDER = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+function getTodayName() {
+  return new Date().toLocaleDateString("en-US", { weekday: "long" });
+}
+
+function groupByDay(events) {
+  const groups = {};
+  events.forEach(e => {
+    if (!groups[e.day]) groups[e.day] = [];
+    groups[e.day].push(e);
   });
+  return groups;
+}
 
-  // Start the timer
-  resetIdleTimer();
-</script>
+function buildEventCard(e, isToday) {
+  return `
+    <div class="event-card${isToday ? " today" : ""}">
+      <div class="event-time">${e.time}</div>
+      <div class="event-main">
+        <p class="event-title">${e.title}</p>
+        <p class="event-location">📍 ${e.location}</p>
+        ${e.desc ? `<p class="event-desc">${e.desc}</p>` : ""}
+        ${e.link ? `<a class="event-link" href="${e.link}" target="_blank" rel="noopener noreferrer">More Info ↗</a>` : ""}
+      </div>
+    </div>
+  `;
+}
 
-<div class="container">
-  <span class="mark-line">GRAND CANYON UNIVERSITY</span>
-  <h1>Events This Week</h1>
-  <p class="subtitle">Career fairs, info sessions, and workshops happening around the College of Business.</p>
-  <p class="week-of">Week of <span id="week-of-label">—</span></p>
+function render() {
+  document.getElementById("week-of-label").textContent = WEEK_OF;
 
-  <div class="timeline" id="timeline"></div>
+  const timeline = document.getElementById("timeline");
+  timeline.innerHTML = "";
 
-  <p class="board-footer">Updated every Monday · past events are removed</p>
-</div>
-
-<script>
-  function goBack() {
-    window.history.back();
+  if (!EVENTS.length) {
+    timeline.innerHTML = `<p class="empty-state">No events posted for this week yet — check back Monday.</p>`;
+    return;
   }
-</script>
-<script src="events-script.js"></script>
-</body>
-</html>
+
+  const grouped = groupByDay(EVENTS);
+  const todayName = getTodayName();
+
+  DAY_ORDER.forEach(day => {
+    const eventsForDay = grouped[day] || [];
+    const isToday = day === todayName;
+    const dayGroup = document.createElement("div");
+    dayGroup.className = "day-group";
+
+    const dateLabel = eventsForDay[0]?.date || "";
+    const eventsHtml = eventsForDay.length
+      ? eventsForDay.map(e => buildEventCard(e, isToday)).join("")
+      : `<div class="empty-day"><p>No events scheduled for ${day}.</p></div>`;
+
+    dayGroup.innerHTML = `
+      <div class="day-header">
+        <span class="day-name${isToday ? " today" : ""}">${day}${dateLabel ? ", " + dateLabel : ""}</span>
+        ${isToday ? '<span class="today-badge">Today</span>' : ""}
+        <span class="day-rule"></span>
+      </div>
+      ${eventsHtml}
+    `;
+
+    timeline.appendChild(dayGroup);
+  });
+}
+
+render();
